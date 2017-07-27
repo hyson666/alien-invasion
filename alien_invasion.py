@@ -28,13 +28,7 @@ def run_game():
         gf.check_events(ui_settings, screen, ship, bullets)
         #根据按键调整坐标再画图
         ship.updata()
-        bullets.update()
-
-        # 注意删除已经消失的子弹以节省内存,copy()副本检测使修改原数据成为了可能
-        for bullet in bullets.copy():
-            if bullet.rect.bottom <= 0:
-                bullets.remove(bullet)  #可以通过remove()删除group中的内容
-
+        gf.updata_bullets(bullets)
         gf.updata_screen(ui_settings, screen, ship, bullets)
 
 run_game()

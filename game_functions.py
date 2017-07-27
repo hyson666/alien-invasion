@@ -13,8 +13,7 @@ def check_keydown_events(event, ui_settings, screen, ship, bullets):
         ship.moving_right = True
     elif event.key == pygame.K_SPACE:
         if len(bullets) < ui_settings.bullets_allowed:
-            new_bullet = Bullet(ui_settings, screen, ship)
-            bullets.add(new_bullet)
+            fire_bullet(ui_settings, screen, ship, bullets)
 
 def check_keyup_events(event, ui_settings, screen, ship, bullet):
     if event.key == pygame.K_LEFT:
@@ -47,4 +46,14 @@ def updata_screen(ui_settings, screen, ship, bullets):
     pygame.display.flip()
 
 def updata_bullets(bullets):
-    
+    "更新子弹位置，删除消失子弹"
+    bullets.update()
+    # 注意删除已经消失的子弹以节省内存,copy()副本检测使修改原数据成为了可能
+    for bullet in bullets.copy():
+        if bullet.rect.bottom <= 0:
+            bullets.remove(bullet)  # 可以通过remove()删除group中的内容
+
+def fire_bullet(ui_settings, screen, ship, bullets):
+    if len(bullets) < ui_settings.bullets_allowed:
+        new_bullet = Bullet(ui_settings, screen, ship)
+        bullets.add(new_bullet)

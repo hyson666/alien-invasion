@@ -24,7 +24,7 @@ def run_game():
     aliens = Group()
 
     # 创建外星人群
-    gf.create_fleet(ui_settings, screen, aliens)
+    gf.create_fleet(ui_settings, screen, ship, aliens)
 
     bg_color = (230,230,230)    #使用RGB参数绘制
 

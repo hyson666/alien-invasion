@@ -35,7 +35,7 @@ def check_events(ui_settings, screen, ship, bullets):
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, ui_settings, screen, ship, bullets)
 
-def updata_screen(ui_settings, screen, ship, aliens, bullets):
+def update_screen(ui_settings, screen, ship, aliens, bullets):
     """更新屏幕上的图像，并且切换到新屏幕"""
     # 每次输出显示前都进行绘制(染色函数）
     screen.fill(ui_settings.bg_color)
@@ -47,13 +47,16 @@ def updata_screen(ui_settings, screen, ship, aliens, bullets):
     # 让最近绘制的屏幕可见(屏幕处理完成后输出)
     pygame.display.flip()
 
-def updata_bullets(bullets):
+def update_bullets(bullets):
     "更新子弹位置，删除消失子弹"
     bullets.update()
     # 注意删除已经消失的子弹以节省内存,copy()副本检测使修改原数据成为了可能
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)  # 可以通过remove()删除group中的内容
+
+def update_aliens(aliens):
+    aliens.update()
 
 def fire_bullet(ui_settings, screen, ship, bullets):
     if len(bullets) < ui_settings.bullets_allowed:
@@ -102,5 +105,22 @@ def create_fleet(ui_settings, screen, ship, aliens):
         for alien_number in range(number_alien_x):
             # 创建一个外星人并加入当前行
             create_alien(ui_settings, screen , aliens, alien_number, row_number)
+
+def check_fleet_edges(ui_settings, aliens):
+    for alien in aliens.sprites():
+        if alien.check_edges():
+            change_fleet_direction(ui_settings, aliens)
+            break
+
+def change_fleet_direction(ui_settings, aliens):
+    "将整群外星人下移，并改变它们的方向"
+    for alien in aliens.sprites():
+        alien.rect.y += ui_settings.fleet_drop_speed
+    ui_settings.fleet_direction *= -1
+
+def update_aliens(ui_settings, aliens):
+    "检查是否有处于边缘的外星人，更新群体外星人位置"
+    check_fleet_edges(ui_settings, aliens)
+    aliens.update()
 
 

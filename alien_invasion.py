@@ -34,7 +34,7 @@ def run_game():
         gf.check_events(ui_settings, screen, ship, bullets)
         # 根据按键调整坐标再画图
         ship.updata()
-        gf.update_bullets(bullets)
+        gf.update_bullets(aliens, bullets)
         gf.update_aliens(ui_settings, aliens)
         gf.update_screen(ui_settings, screen, ship, aliens, bullets)
 

@@ -24,6 +24,8 @@ class Ship():
         #移动标志
         self.moving_left = False
         self.moving_right = False
+        self.moving_up = False
+        self.moving_down = False
 
     # 调整位置
     def updata(self):
@@ -31,6 +33,10 @@ class Ship():
             self.center -= self.ui_settrings.ship_speed_factor
         if self.moving_right and self.rect.right < self.screen_rect.right:
             self.center += self.ui_settrings.ship_speed_factor
+        if self.moving_up and self.rect.top >0:
+            self.rect.bottom -= self.ui_settrings.ship_speed_factor
+        if self.moving_down and self.rect.bottom < self.screen_rect.bottom:
+            self.rect.bottom += self.ui_settrings.ship_speed_factor
 
         # 根据self。center更新rect对象
         self.rect.centerx = self.center

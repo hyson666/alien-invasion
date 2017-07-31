@@ -14,7 +14,7 @@ def run_game():
     pygame.init()
     ui_settings = Settings()
     screen = pygame.display.set_mode((ui_settings.screen_width,ui_settings.screen_height))    #参数用列表传输屏幕大小宽、高
-    pygame.display.set_caption("Alien Invasion")
+    pygame.display.set_caption("今晚打飞碟 By Hyson Ver1.0")
     alien = Alien(ui_settings, screen)
 
     # 给飞船对象传输当前屏幕对象而创建一个实例
